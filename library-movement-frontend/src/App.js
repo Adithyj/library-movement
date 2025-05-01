@@ -1,14 +1,23 @@
-// src/App.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import MovementForm from './components/MovementForm';
 import MovementTable from './components/MovementTable';
 
 function App() {
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const handleEntryAdded = () => {
+    setRefreshKey(prev => prev + 1);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold text-center mb-6">Library Movement Registry</h1>
-      <MovementForm />
-      <MovementTable />
+    <div className="container">
+      <header className="header">
+        <h1>Library Movement Registry</h1>
+        <p>Track and manage library entries efficiently</p>
+      </header>
+
+      <MovementForm onEntryAdded={handleEntryAdded} />
+      <MovementTable key={refreshKey} />
     </div>
   );
 }
